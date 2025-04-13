@@ -23,7 +23,7 @@ export default function RightPanelHeading({ clients }: RightPanelHeadingProps) {
   const filteredClients = useMemo(() => {
     if (tipo_doc === '01') {
       return clients.filter((c) => c.tipo_doc === '6');
-    } else if (tipo_doc === 'Boleta') {
+    } else if (tipo_doc === '03') {
       return clients.filter((c) => c.tipo_doc === '1');
     }
     return clients;

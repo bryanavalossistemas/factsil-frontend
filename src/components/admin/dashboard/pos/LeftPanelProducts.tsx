@@ -7,6 +7,7 @@ import CreateButtonProducts from '@/components/admin/dashboard/products/CreateBu
 import { SaleForm } from '@/schemas/sales';
 import { useProducts } from '@/hooks/useProducts';
 import { useFormContext } from 'react-hook-form';
+import { Separator } from '@/components/ui/separator';
 
 export default function LeftPanelProducts() {
   const { data: products = [] } = useProducts();
@@ -42,7 +43,7 @@ export default function LeftPanelProducts() {
           {filteredProducts.map((product) => (
             <Card
               key={product.id}
-              className="cursor-pointer hover:shadow-md transition-shadow p-0 overflow-hidden gap-0"
+              className="cursor-pointer hover:shadow-md transition-shadow p-0 gap-0"
               onClick={() => {
                 setValue('sale_details', [
                   {
@@ -57,11 +58,14 @@ export default function LeftPanelProducts() {
                 ]);
               }}
             >
-              <img
-                src={product.image_path ? `${import.meta.env.VITE_API_URL}/storage/${product.image_path}` : '/placeholder.svg'}
-                alt={product.name}
-                className="object-cover h-50 w-full"
-              />
+              <div className="flex justify-center items-center h-40">
+                <img
+                  src={product.image_path ? `${import.meta.env.VITE_API_URL}/storage/${product.image_path}` : '/placeholder.svg'}
+                  alt={product.name}
+                  className="object-cover h-30"
+                />
+              </div>
+              <Separator />
               <CardContent className="p-3">
                 <h3 className="font-medium text-sm">{product.name}</h3>
                 <p className="text-primary font-bold">{formatCurrency(product.mto_precio_unitario)}</p>

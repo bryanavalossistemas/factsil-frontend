@@ -5,19 +5,17 @@ import { Button } from '@/components/ui/button';
 import { useRef } from 'react';
 import { formatCurrency, formatDateQr } from '@/lib/utils';
 import { DownloadIcon, PrinterIcon, XIcon } from 'lucide-react';
-import { Sale, SaleForm } from '@/schemas/sales';
-import { useFormContext } from 'react-hook-form';
+import { Sale } from '@/schemas/sales';
 import { QRCodeSVG } from 'qrcode.react';
 
 interface CreateButtonProps {
-  sale?: Sale;
+  sale: Sale;
   openDialog: boolean;
   setOpenDialog: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export default function SalePDF({ openDialog, setOpenDialog, sale }: CreateButtonProps) {
   const pdfRef = useRef<HTMLDivElement>(null);
-  const { reset } = useFormContext<SaleForm>();
 
   const generatePDF = async (action: 'download' | 'print' = 'download') => {
     if (!pdfRef.current) return;
@@ -57,8 +55,6 @@ export default function SalePDF({ openDialog, setOpenDialog, sale }: CreateButto
       // 3. Guardar PDF con opciones de compresión
       const pdfBytes = await pdfDoc.save({
         useObjectStreams: true,
-        // Opción alternativa para compresión si 'compress' no funciona
-        // useCompression: true
       });
 
       // 4. Manejo de la descarga/impresión
@@ -96,13 +92,7 @@ export default function SalePDF({ openDialog, setOpenDialog, sale }: CreateButto
   return (
     <>
       <Dialog open={openDialog} onOpenChange={setOpenDialog}>
-        <DialogContent
-          className="min-w-fit max-h-[95svh] flex flex-col"
-          onInteractOutside={(e) => e.preventDefault()}
-          onCloseAutoFocus={() => {
-            reset();
-          }}
-        >
+        <DialogContent className="min-w-fit max-h-[95svh] flex flex-col">
           <DialogHeader>
             <DialogTitle>Comprobante</DialogTitle>
             <DialogDescription>Vista previa del comprobante</DialogDescription>
@@ -129,7 +119,9 @@ export default function SalePDF({ openDialog, setOpenDialog, sale }: CreateButto
                 <span className="bg-blue-invoice pr-4 pl-1 py-1 text-white font-bold w-fit">Datos del Documento:</span>
                 <p className="px-2">Cliente: {sale?.client.rzn_social}</p>
                 {/* <p className="px-2">Dirección: {client?.address}</p> */}
-                <p className="px-2">RUC: {sale?.client.num_doc}</p>
+                <p className="px-2">
+                  {sale.client.tipo_doc === '6' ? 'RUC' : 'DNI'}: {sale?.client.num_doc}
+                </p>
                 <p className="px-2">Forma de pago: Efectivo</p>
               </div>
 

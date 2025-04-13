@@ -21,4 +21,9 @@ export const dateOptions = [
   { id: 3, label: 'Siempre', value: null },
 ];
 
+export const identityDocuments = [
+  { label: 'DNI', value: '1' },
+  { label: 'RUC', value: '6' },
+];
+
 export const pageSize = window.innerWidth < 640 ? 3 : 5;

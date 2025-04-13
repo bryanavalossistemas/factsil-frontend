@@ -8,7 +8,6 @@ export const columns: Columns = {
   correlativo: 'N° Documento',
   created_at: 'Fecha',
   client_rzn_social: 'Cliente',
-  estado_sunat: 'Estado',
   mto_imp_venta: 'Total',
 };
 
@@ -21,10 +20,8 @@ export const dateOptions = [
 export const columnsToExport = [
   { header: 'Id', key: 'id' },
   { header: 'Tipo de Comprobante', key: 'tipo_doc' },
-  { header: 'Serie', key: 'serie' },
-  { header: 'N° Documento', key: 'correlativo' },
-  { header: 'Fecha', key: 'created_at' },
-  { header: 'Cliente', key: 'client' },
+  { header: 'Cliente', key: 'client_rzn_social' },
+  { header: 'RUC / DNI', key: 'supplierDocument' },
   { header: 'Total', key: 'mto_imp_venta' },
 ];
 

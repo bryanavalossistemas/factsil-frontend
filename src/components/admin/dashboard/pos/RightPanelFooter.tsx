@@ -1,22 +1,24 @@
 import { useState, useMemo } from 'react';
 import { Button } from '@/components/ui/button';
 import { formatCurrency } from '@/lib/utils';
-import { SaleForm } from '@/schemas/sales';
-import { useFormContext } from 'react-hook-form';
+import { Sale, SaleForm } from '@/schemas/sales';
+import { useFormContext, useWatch } from 'react-hook-form';
 import { useMutation } from '@tanstack/react-query';
 import { create } from '@/api/sales';
 import { toast } from 'sonner';
-import { Client } from '@/schemas/clients';
 import SalePDF from '@/components/admin/dashboard/pos/SalePDF';
+import { FileCheckIcon } from 'lucide-react';
 
 interface RightPanelFooterProps {
-  clients: Client[];
   sale_details: SaleForm['sale_details'];
 }
 
-export default function RightPanelFooter({ clients: clients, sale_details }: RightPanelFooterProps) {
+export default function RightPanelFooter({ sale_details }: RightPanelFooterProps) {
   const [openDialog, setOpenDialog] = useState(false);
-  const { handleSubmit, getValues } = useFormContext<SaleForm>();
+  const { handleSubmit, control } = useFormContext<SaleForm>();
+  const [sale, setSale] = useState<Sale | undefined>();
+
+  const tipo_doc = useWatch({ control: control, name: 'tipo_doc' });
 
   const { total, subtotal, tax } = useMemo(() => {
     const total = sale_details.reduce((sum, item) => sum + (item.mto_precio_unitario || 0) * (item.cantidad || 0), 0);
@@ -35,11 +37,12 @@ export default function RightPanelFooter({ clients: clients, sale_details }: Rig
     onError: (error) => {
       toast.error(error.message);
     },
-    onMutate: () => {
-      setOpenDialog(true);
-    },
-    onSuccess: () => {
-      toast.success('Venta creada correctamente');
+    onSuccess: (sale: Sale | undefined) => {
+      if (sale) {
+        toast.success('Venta creada correctamente');
+        setSale(sale);
+        setOpenDialog(true);
+      }
     },
   });
 
@@ -67,17 +70,10 @@ export default function RightPanelFooter({ clients: clients, sale_details }: Rig
         className="w-full h-14 text-lg cursor-pointer"
         disabled={sale_details.length === 0 || isPending}
       >
-        Guardar
+        <FileCheckIcon className='size-5' />
+        <span>Generar {tipo_doc === '01' ? 'Factura' : 'Boleta'}</span>
       </Button>
-      <SalePDF
-        saleDetails={sale_details}
-        customer={clients.find((c) => c.id === getValues('client_id'))}
-        total={total}
-        subtotal={subtotal}
-        tax={tax}
-        openDialog={openDialog}
-        setOpenDialog={setOpenDialog}
-      />
+      <SalePDF sale={sale} openDialog={openDialog} setOpenDialog={setOpenDialog} />
     </div>
   );
 }

@@ -3,20 +3,20 @@ import { useState, useRef, useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 interface CartItemUnitPriceProps {
-  unitPrice: number;
+  mto_precio_unitario: number;
   id: number;
 }
 
-export default function CartItemUnitPrice({ id, unitPrice }: CartItemUnitPriceProps) {
+export default function CartItemUnitPrice({ id, mto_precio_unitario }: CartItemUnitPriceProps) {
   const [isEditing, setIsEditing] = useState(false);
-  const [displayValue, setDisplayValue] = useState(unitPrice.toFixed(2));
+  const [displayValue, setDisplayValue] = useState(mto_precio_unitario.toFixed(2));
   const inputRef = useRef<HTMLInputElement>(null);
 
   const { setValue, getValues } = useFormContext<SaleForm>();
 
   useEffect(() => {
-    setDisplayValue(unitPrice.toFixed(2));
-  }, [unitPrice]);
+    setDisplayValue(mto_precio_unitario.toFixed(2));
+  }, [mto_precio_unitario]);
 
   const handleDoubleClick = () => {
     setIsEditing(true);
@@ -43,8 +43,8 @@ export default function CartItemUnitPrice({ id, unitPrice }: CartItemUnitPricePr
     numericValue = parseFloat(numericValue.toFixed(2));
 
     setValue(
-      'saleDetails',
-      getValues('saleDetails').map((d) => (d.id === id ? { ...d, unitPrice: numericValue } : d)),
+      'sale_details',
+      getValues('sale_details').map((d) => (d.id === id ? { ...d, mto_precio_unitario: numericValue } : d)),
     );
 
     setDisplayValue(numericValue.toFixed(2));
@@ -56,14 +56,14 @@ export default function CartItemUnitPrice({ id, unitPrice }: CartItemUnitPricePr
       handleBlur();
       setIsEditing(false);
     } else if (e.key === 'Escape') {
-      setDisplayValue(unitPrice.toFixed(2));
+      setDisplayValue(mto_precio_unitario.toFixed(2));
       setIsEditing(false);
     }
   };
 
   return isEditing ? (
     <input
-      id="unitPrice"
+      id="mto_precio_unitario"
       ref={inputRef}
       type="text"
       value={displayValue}

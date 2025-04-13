@@ -19,7 +19,7 @@ export default function RightPanelCart() {
 
       <RightPanelBody sale_details={sale_details} />
 
-      <RightPanelFooter clients={clients} sale_details={sale_details} />
+      <RightPanelFooter sale_details={sale_details} />
     </div>
   );
 }

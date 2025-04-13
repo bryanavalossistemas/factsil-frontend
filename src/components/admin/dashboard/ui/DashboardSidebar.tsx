@@ -78,14 +78,19 @@ export default function DashboardSidebar({ ...props }: React.ComponentProps<type
         isActive: pathname.includes('/admin/dashboard/sales'),
         items: [
           {
-            title: 'Ventas',
-            url: '/admin/dashboard/sales/sales',
-            isActive: pathname === '/admin/dashboard/sales/sales',
-          },
-          {
             title: 'Punto de Venta',
             url: '/admin/dashboard/sales/pos',
             isActive: pathname === '/admin/dashboard/sales/pos',
+          },
+          {
+            title: 'Envíos a SUNAT',
+            url: '/admin/dashboard/sales/send-sunat',
+            isActive: pathname === '/admin/dashboard/sales/send-sunat',
+          },
+          {
+            title: 'Ventas',
+            url: '/admin/dashboard/sales/sales',
+            isActive: pathname === '/admin/dashboard/sales/sales',
           },
           {
             title: 'Clientes',

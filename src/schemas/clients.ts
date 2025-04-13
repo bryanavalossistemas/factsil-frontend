@@ -2,7 +2,7 @@ import { z } from 'zod';
 
 export const ClientSchema = z.object({
   id: z.number(),
-  tipo_doc: z.string(),
+  tipo_doc: z.enum(['1', '6']),
   num_doc: z.string(),
   rzn_social: z.string(),
 });

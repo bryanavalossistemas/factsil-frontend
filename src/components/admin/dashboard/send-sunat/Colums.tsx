@@ -2,10 +2,8 @@ import { createColumnHelper } from '@tanstack/react-table';
 import { ArrowUpDownIcon } from 'lucide-react';
 import { Sale } from '@/schemas/sales';
 import { Checkbox } from '@/components/ui/checkbox';
-import RemoveButton from '@/components/admin/dashboard/sales/RemoveButton';
-import UpdateButton from '@/components/admin/dashboard/sales/UpdateButton';
 import { formatCurrency, formatDate } from '@/lib/utils';
-import { Badge } from '@/components/ui/badge';
+import SeeButton from '@/components/admin/dashboard/send-sunat/SeeButton';
 
 const columnHelper = createColumnHelper<Sale>();
 
@@ -21,6 +19,16 @@ export const columns = [
     ),
     cell: ({ row }) => <Checkbox checked={row.getIsSelected()} onCheckedChange={(value) => row.toggleSelected(!!value)} aria-label="Select row" />,
     enableHiding: false,
+  }),
+
+  columnHelper.accessor('tipo_doc', {
+    header: ({ column }) => (
+      <div className="flex items-center gap-1 cursor-pointer w-fit" onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}>
+        <span>Tipo</span>
+        <ArrowUpDownIcon className="size-4" />
+      </div>
+    ),
+    cell: (info) => (info.getValue() === '01' ? 'Factura' : 'Boleta'),
   }),
 
   columnHelper.accessor('serie', {
@@ -63,27 +71,6 @@ export const columns = [
     cell: (info) => <div className="whitespace-normal">{info.getValue()}</div>,
   }),
 
-  columnHelper.accessor('estado_sunat', {
-    header: ({ column }) => (
-      <div className="flex justify-center">
-        <div className="flex items-center gap-1 cursor-pointer w-fit" onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}>
-          <span>Estado</span>
-          <ArrowUpDownIcon className="size-4" />
-        </div>
-      </div>
-    ),
-    cell: (info) => (
-      <div className="flex justify-center">
-        <Badge
-          className="capitalize"
-          variant={info.getValue() === 'aceptado' ? 'default' : info.getValue() === 'pendiente' ? 'secondary' : 'destructive'}
-        >
-          {info.getValue()}
-        </Badge>
-      </div>
-    ),
-  }),
-
   columnHelper.accessor('mto_imp_venta', {
     header: ({ column }) => (
       <div className="flex justify-end">
@@ -100,8 +87,7 @@ export const columns = [
     id: 'action',
     cell: ({ row }) => (
       <div className="flex gap-2 justify-end">
-        <UpdateButton item={row.original} />
-        <RemoveButton id={row.original.id} />
+        <SeeButton sale={row.original} />
       </div>
     ),
     enableHiding: false,

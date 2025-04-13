@@ -16,7 +16,7 @@ export default function UpdateButton({ item }: UpdateButtonProps) {
   const [openDrawer, setOpenDrawer] = useState(false);
   const [openDialog, setOpenDialog] = useState(false);
 
-  const { data: customers = [], isLoading } = useClients();
+  const { data: clients = [], isLoading } = useClients();
 
   if (isLoading) {
     return (
@@ -40,7 +40,7 @@ export default function UpdateButton({ item }: UpdateButtonProps) {
             <DrawerTitle>Editar Venta</DrawerTitle>
             <DrawerDescription>Actualice los datos de la venta</DrawerDescription>
           </DrawerHeader>
-          <UpdateForm setOpen={setOpenDrawer} item={item} customers={customers} />
+          <UpdateForm setOpen={setOpenDrawer} item={item} clients={clients} />
         </DrawerContent>
       </Drawer>
 
@@ -56,7 +56,7 @@ export default function UpdateButton({ item }: UpdateButtonProps) {
             <DialogTitle>Editar Venta</DialogTitle>
             <DialogDescription>Actualice los datos de la venta</DialogDescription>
           </DialogHeader>
-          <UpdateForm setOpen={setOpenDialog} item={item} customers={customers} />
+          <UpdateForm setOpen={setOpenDialog} item={item} clients={clients} />
         </DialogContent>
       </Dialog>
     </>

@@ -1,3 +1,4 @@
+import { identityDocuments } from '@/components/admin/dashboard/clients/constants';
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
@@ -47,8 +48,11 @@ export default function FormFields({ form }: FormFieldsProps) {
                 </SelectTrigger>
               </FormControl>
               <SelectContent>
-                <SelectItem value="6">RUC</SelectItem>
-                <SelectItem value="1">DNI</SelectItem>
+                {identityDocuments.map((item) => (
+                  <SelectItem key={item.value} value={item.value}>
+                    {item.label}
+                  </SelectItem>
+                ))}
               </SelectContent>
             </Select>
             <FormMessage />

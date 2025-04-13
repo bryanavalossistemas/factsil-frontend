@@ -3,25 +3,25 @@ import { useState, useRef, useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 interface CartItemProductNameProps {
-  productName: string;
+  descripcion: string;
   id: number;
 }
 
-export default function CartItemProductName({ id, productName }: CartItemProductNameProps) {
+export default function CartItemProductName({ id, descripcion }: CartItemProductNameProps) {
   const [isEditing, setIsEditing] = useState(false);
-  const [editValue, setEditValue] = useState(productName);
+  const [editValue, setEditValue] = useState(descripcion);
   const displayRef = useRef<HTMLDivElement>(null);
   const editRef = useRef<HTMLDivElement>(null);
 
   const { setValue, getValues } = useFormContext<SaleForm>();
 
   useEffect(() => {
-    setEditValue(productName);
-  }, [productName]);
+    setEditValue(descripcion);
+  }, [descripcion]);
 
   const handleDoubleClick = () => {
     setIsEditing(true);
-    setEditValue(productName);
+    setEditValue(descripcion);
   };
 
   useEffect(() => {
@@ -37,8 +37,8 @@ export default function CartItemProductName({ id, productName }: CartItemProduct
   const handleSave = () => {
     const newValue = editRef.current?.innerText.trim() || '';
     setValue(
-      'saleDetails',
-      getValues('saleDetails').map((d) => (d.id === id ? { ...d, productName: newValue } : d)),
+      'sale_details',
+      getValues('sale_details').map((d) => (d.id === id ? { ...d, descripcion: newValue } : d)),
     );
     // updateProductName(id, newValue);
     setIsEditing(false);
@@ -61,7 +61,7 @@ export default function CartItemProductName({ id, productName }: CartItemProduct
         onDoubleClick={handleDoubleClick}
         className={`px-1 py-0.5 rounded-md hover:bg-accent hover:cursor-pointer select-none ${isEditing ? 'hidden' : ''}`}
       >
-        {productName}
+        {descripcion}
       </div>
 
       <div

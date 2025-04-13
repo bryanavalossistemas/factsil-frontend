@@ -10,8 +10,8 @@ export const create = async ({ formData: data }: { formData: ProductForm }) => {
   formData.append('mto_precio_unitario', `${mto_precio_unitario}`);
   formData.append('cod_producto', `${cod_producto || null}`);
   formData.append('category_id', `${category_id || null}`);
-  if (unidad) formData.append('unidad', unidad);
-	if (tip_afe_igv) formData.append('unidad', tip_afe_igv);
+  formData.append('unidad', unidad);
+  formData.append('tip_afe_igv', tip_afe_igv);
   if (image) formData.append('image', image);
 
   try {

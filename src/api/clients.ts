@@ -4,7 +4,6 @@ import { ClientForm, Client, ClientSchema, ClientsSchema } from '@/schemas/clien
 import { isAxiosError } from 'axios';
 
 export const create = async ({ formData: data }: { formData: ClientForm }) => {
-  console.log('hola?');
   const { rzn_social, tipo_doc, num_doc } = data;
   const formData: Omit<Client, 'id'> = {
     rzn_social: rzn_social,

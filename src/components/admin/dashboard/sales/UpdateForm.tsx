@@ -14,27 +14,24 @@ import FormFields from '@/components/admin/dashboard/sales/FormFields';
 interface UpdateFormProps {
   setOpen: Dispatch<SetStateAction<boolean>>;
   item: Sale;
-  customers: Client[];
+  clients: Client[];
 }
 
-export default function UpdateForm({ setOpen, item, customers }: UpdateFormProps) {
-  const { id, createdAt, documentType, customerId, saleDetails, documentNumber } = item;
+export default function UpdateForm({ setOpen, item, clients }: UpdateFormProps) {
+  const { id, sale_details, tipo_doc, client_id } = item;
 
   const form = useForm<SaleForm>({
     resolver: zodResolver(SaleFormSchema),
     defaultValues: {
-      documentType: documentType,
-      customerId: customerId,
-      saleDetails: saleDetails.map((d) => {
-        return {
-          id: d.id,
-          productId: d.productId,
-          productName: d.productName,
-          quantity: d.quantity,
-          unitPrice: d.unitPrice,
-          costPrice: d.costPrice,
-        };
-      }),
+      client_id: client_id,
+      tipo_doc: tipo_doc,
+      sale_details: sale_details.map((d) => ({
+        id: d.id,
+        cantidad: d.cantidad,
+        mto_precio_unitario: d.mto_precio_unitario,
+        descripcion: d.descripcion,
+        product_id: d.product_id,
+      })),
     },
   });
 
@@ -112,7 +109,7 @@ export default function UpdateForm({ setOpen, item, customers }: UpdateFormProps
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="flex-1 p-2 flex flex-col">
-        <FormFields form={form} customers={customers} />
+        <FormFields form={form} clients={clients} />
         <div className="flex flex-col sm:flex-row-reverse gap-2 mt-2 sm:mt-4">
           <Button type="submit" disabled={isPending}>
             Guardar

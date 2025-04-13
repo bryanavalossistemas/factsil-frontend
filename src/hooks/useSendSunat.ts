@@ -1,13 +1,13 @@
-import { findAll } from '@/api/sales';
+import { findAll } from '@/api/sendSunat';
 import { useQuery } from '@tanstack/react-query';
 import { useSearchParams } from 'react-router';
 
-export const useSales = () => {
+export const useSendSunat = () => {
   const [searchParams] = useSearchParams();
   const date = searchParams.get('date');
 
   return useQuery({
-    queryKey: date === null ? ['sales'] : ['sales', date],
+    queryKey: date === null ? ['sendSunat'] : ['sendSunat', date],
     queryFn: () => findAll(date === null ? 'this-month' : date),
   });
 };

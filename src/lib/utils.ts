@@ -7,12 +7,12 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export function getDateRange3({ dateOption }: { dateOption: string }) {
+export function getDateRangeDefaultThisMonth(date: string) {
   const now = new Date();
   let startDate, endDate;
 
-  switch (dateOption) {
-    case 'month':
+  switch (date) {
+    case 'this-month':
       startDate = new Date(now.getFullYear(), now.getMonth(), 1).toISOString();
       endDate = new Date(now.getFullYear(), now.getMonth() + 1, 1).toISOString();
       break;
@@ -61,6 +61,10 @@ export function formatDate(date: Date | number) {
   }).format(date);
 }
 
+export function formatDateQr(date: Date | number) {
+  return new Intl.DateTimeFormat('sv-SE').format(date);
+}
+
 export async function exportToExcel<T>({ dataToExport, columns }: { dataToExport: T[]; columns: Partial<ExcelJS.Column>[] }) {
   const workbook = new ExcelJS.Workbook();
   const worksheet = workbook.addWorksheet('Datos');
@@ -77,8 +81,8 @@ export async function exportToExcel<T>({ dataToExport, columns }: { dataToExport
     };
   });
 
-  dataToExport.forEach((category) => {
-    worksheet.addRow(category);
+  dataToExport.forEach((data) => {
+    worksheet.addRow(data);
   });
 
   worksheet.columns.forEach((column) => {

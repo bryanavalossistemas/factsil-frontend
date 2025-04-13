@@ -16,22 +16,22 @@ import { useMemo, useState } from 'react';
 
 interface FormFieldsProps {
   form: UseFormReturn<SaleForm>;
-  customers: Client[];
+  clients: Client[];
 }
 
-export default function FormFields({ form, customers }: FormFieldsProps) {
+export default function FormFields({ form, clients }: FormFieldsProps) {
   const [openCustomersDrawer, setOpenCustomersDrawer] = useState(false);
   const [openCustomersPopover, setOpenCustomersPopover] = useState(false);
-  const currentDocumentType = useWatch({ control: form.control, name: 'documentType' });
+  const currentDocumentType = useWatch({ control: form.control, name: 'tipo_doc' });
 
-  const filteredCustomers = useMemo(() => {
-    if (currentDocumentType === 'Factura') {
-      return customers.filter((c) => c.documentType === 'RUC');
-    } else if (currentDocumentType === 'Boleta') {
-      return customers.filter((c) => c.documentType === 'DNI');
+  const filteredClients = useMemo(() => {
+    if (currentDocumentType === '01') {
+      return clients.filter((c) => c.tipo_doc === '6');
+    } else if (currentDocumentType === '03') {
+      return clients.filter((c) => c.tipo_doc === '1');
     }
-    return customers;
-  }, [customers, currentDocumentType]);
+    return clients;
+  }, [clients, currentDocumentType]);
 
   return (
     <>
@@ -40,14 +40,14 @@ export default function FormFields({ form, customers }: FormFieldsProps) {
           {/* DOCUMENT TYPE */}
           <FormField
             control={form.control}
-            name="documentType"
+            name="tipo_doc"
             render={({ field }) => (
               <FormItem>
                 <Select
-                  name="documentType"
+                  name="tipo_doc"
                   onValueChange={(value) => {
                     field.onChange(value);
-                    form.setValue('customerId', 0);
+                    form.setValue('client_id', 0);
                   }}
                   defaultValue={field.value}
                 >
@@ -57,8 +57,8 @@ export default function FormFields({ form, customers }: FormFieldsProps) {
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent className="min-w-auto w-[100px]">
-                    <SelectItem value={'Factura'}>Factura</SelectItem>
-                    <SelectItem value={'Boleta'}>Boleta</SelectItem>
+                    <SelectItem value={'01'}>Factura</SelectItem>
+                    <SelectItem value={'03'}>Boleta</SelectItem>
                   </SelectContent>
                 </Select>
                 <FormMessage />
@@ -71,40 +71,40 @@ export default function FormFields({ form, customers }: FormFieldsProps) {
             {/* MOBILE */}
             <FormField
               control={form.control}
-              name="customerId"
+              name="client_id"
               render={({ field }) => (
                 <FormItem className="flex flex-col sm:hidden">
-                  <FormLabel>Proveedor</FormLabel>
+                  <FormLabel>Cliente</FormLabel>
                   <Drawer open={openCustomersDrawer} onOpenChange={setOpenCustomersDrawer}>
                     <DrawerTrigger asChild>
                       <FormControl>
                         <Button variant="outline" role="combobox" className={cn('justify-between', !field.value && 'text-muted-foreground')}>
-                          {field.value ? filteredCustomers.find((supplier) => supplier.id === field.value)?.name : 'Seleccionar proveedor'}
+                          {field.value ? filteredClients.find((client) => client.id === field.value)?.rzn_social : 'Seleccionar cliente'}
                           <ChevronsUpDownIcon className="opacity-50" />
                         </Button>
                       </FormControl>
                     </DrawerTrigger>
                     <DrawerContent>
                       <DrawerHeader>
-                        <DrawerTitle>Seleccionar Proveedor</DrawerTitle>
-                        <DrawerDescription>Busque el proveedor de la compra</DrawerDescription>
+                        <DrawerTitle>Seleccionar Cliente</DrawerTitle>
+                        <DrawerDescription>Busque el cliente de la venta</DrawerDescription>
                       </DrawerHeader>
                       <Command>
-                        <CommandInput placeholder="Buscar proveedor..." className="h-9" />
+                        <CommandInput placeholder="Buscar cliente..." className="h-9" />
                         <CommandList>
-                          <CommandEmpty>No se encontró ningún proveedor</CommandEmpty>
+                          <CommandEmpty>No se encontró ningún cliente</CommandEmpty>
                           <CommandGroup>
-                            {filteredCustomers.map((supplier) => (
+                            {filteredClients.map((client) => (
                               <CommandItem
-                                value={supplier.name}
-                                key={supplier.id}
+                                value={client.rzn_social}
+                                key={client.id}
                                 onSelect={() => {
-                                  form.setValue('customerId', supplier.id);
+                                  form.setValue('client_id', client.id);
                                   setOpenCustomersDrawer(false);
                                 }}
                               >
-                                {supplier.name}
-                                <CheckIcon className={cn('ml-auto', supplier.id === field.value ? 'opacity-100' : 'opacity-0')} />
+                                {client.rzn_social}
+                                <CheckIcon className={cn('ml-auto', client.id === field.value ? 'opacity-100' : 'opacity-0')} />
                               </CommandItem>
                             ))}
                           </CommandGroup>
@@ -119,7 +119,7 @@ export default function FormFields({ form, customers }: FormFieldsProps) {
             {/* DESKTOP */}
             <FormField
               control={form.control}
-              name="customerId"
+              name="client_id"
               render={({ field }) => (
                 <FormItem className="hidden sm:flex sm:flex-col">
                   <Popover open={openCustomersPopover} onOpenChange={setOpenCustomersPopover}>
@@ -127,7 +127,7 @@ export default function FormFields({ form, customers }: FormFieldsProps) {
                       <FormControl>
                         <Button variant="outline" role="combobox" className={cn('justify-between', !field.value && 'text-muted-foreground')}>
                           <span className="truncate max-w-[465px]">
-                            {field.value ? filteredCustomers.find((supplier) => supplier.id === field.value)?.name : 'Seleccionar proveedor'}
+                            {field.value ? filteredClients.find((client) => client.id === field.value)?.rzn_social : 'Seleccionar cliente'}
                           </span>
                           <ChevronsUpDownIcon className="opacity-50" />
                         </Button>
@@ -135,21 +135,21 @@ export default function FormFields({ form, customers }: FormFieldsProps) {
                     </PopoverTrigger>
                     <PopoverContent className="w-[517.39px] p-0">
                       <Command>
-                        <CommandInput placeholder="Buscar proveedor..." className="h-9" />
+                        <CommandInput placeholder="Buscar cliente..." className="h-9" />
                         <CommandList>
-                          <CommandEmpty>No se encontró ningún proveedor</CommandEmpty>
+                          <CommandEmpty>No se encontró ningún cliente</CommandEmpty>
                           <CommandGroup>
-                            {filteredCustomers.map((supplier) => (
+                            {filteredClients.map((client) => (
                               <CommandItem
-                                value={supplier.name}
-                                key={supplier.id}
+                                value={client.rzn_social}
+                                key={client.id}
                                 onSelect={() => {
-                                  form.setValue('customerId', supplier.id);
+                                  form.setValue('client_id', client.id);
                                   setOpenCustomersPopover(false);
                                 }}
                               >
-                                {supplier.name}
-                                <CheckIcon className={cn('ml-auto', supplier.id === field.value ? 'opacity-100' : 'opacity-0')} />
+                                {client.rzn_social}
+                                <CheckIcon className={cn('ml-auto', client.id === field.value ? 'opacity-100' : 'opacity-0')} />
                               </CommandItem>
                             ))}
                           </CommandGroup>
@@ -168,11 +168,11 @@ export default function FormFields({ form, customers }: FormFieldsProps) {
       <div className="flex-1 mt-4">
         <FormField
           control={form.control}
-          name="saleDetails"
+          name="sale_details"
           render={({ field }) => (
             <FormItem>
               <Table>
-                <TableCaption>Detalles de la compra</TableCaption>
+                <TableCaption>Detalles de la venta</TableCaption>
                 <TableHeader>
                   <TableRow>
                     <TableHead />
@@ -194,12 +194,12 @@ export default function FormFields({ form, customers }: FormFieldsProps) {
                               onClick={() => {
                                 if (detail.created) {
                                   form.setValue(
-                                    'saleDetails',
+                                    'sale_details',
                                     field.value.filter((p) => p.id !== detail.id),
                                   );
                                 } else {
                                   form.setValue(
-                                    'saleDetails',
+                                    'sale_details',
                                     field.value.map((p) => (p.id === detail.id ? { ...p, deleted: true } : p)),
                                   );
                                 }
@@ -208,10 +208,10 @@ export default function FormFields({ form, customers }: FormFieldsProps) {
                             <UpdateButton purchaseForm={form} item={detail} />
                           </div>
                         </TableCell>
-                        <TableCell className="truncate max-w-[460px]">{detail.productName}</TableCell>
-                        <TableCell className="text-center">{detail.quantity}</TableCell>
-                        <TableCell className="text-right">{formatCurrency(detail.unitPrice)}</TableCell>
-                        <TableCell className="text-right">{formatCurrency(detail.unitPrice * detail.quantity)}</TableCell>
+                        <TableCell className="truncate max-w-[460px]">{detail.descripcion}</TableCell>
+                        <TableCell className="text-center">{detail.cantidad}</TableCell>
+                        <TableCell className="text-right">{formatCurrency(detail.mto_precio_unitario)}</TableCell>
+                        <TableCell className="text-right">{formatCurrency(detail.mto_precio_unitario * detail.cantidad)}</TableCell>
                       </TableRow>
                     ))}
                 </TableBody>
@@ -219,7 +219,7 @@ export default function FormFields({ form, customers }: FormFieldsProps) {
                   <TableRow>
                     <TableCell colSpan={4}>Total</TableCell>
                     <TableCell className="text-right">
-                      {formatCurrency(field.value.reduce((acummulator, detail) => acummulator + detail.unitPrice * detail.quantity, 0))}
+                      {formatCurrency(field.value.reduce((acummulator, detail) => acummulator + detail.mto_precio_unitario * detail.cantidad, 0))}
                     </TableCell>
                   </TableRow>
                 </TableFooter>

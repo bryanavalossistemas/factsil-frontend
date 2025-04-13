@@ -36,10 +36,10 @@ export default function RightPanelBody({ sale_details }: RightPanelBodyProps) {
                       className=" object-cover w-16 h-16 rounded shrink-0 shadow-sm"
                     />
                     <div className="flex-1">
-                      <CartItemProductName id={item.id} productName={item.descripcion} />
+                      <CartItemProductName id={item.id} descripcion={item.descripcion} />
                       <div className="flex items-center font-semibold">
                         <span className="mr-1">S/.</span>
-                        <CartItemUnitPrice id={item.id} unitPrice={item.mto_precio_unitario} />
+                        <CartItemUnitPrice id={item.id} mto_precio_unitario={item.mto_precio_unitario} />
                       </div>
                     </div>
                     <div className="flex items-center gap-2 shrink-0">

@@ -15,7 +15,7 @@ export default function GoogleCallbackView() {
     mutationFn: google,
     onSuccess: ({ data }) => {
       toast.success('Ingreso correcto');
-      login(data.access_token);
+      login(data.user, data.access_token);
     },
     onError: () => {
       toast.error('Parece que hubo un problema al autenticarse con google');

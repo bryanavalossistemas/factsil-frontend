@@ -10,7 +10,7 @@ import { useState } from 'react';
 import { Checkbox } from '@/components/ui/checkbox';
 import TableSkeleton from '@/components/ui/table-skeleton';
 import { Card } from '@/components/ui/card';
-import UpdateButton from '@/components/admin/dashboard/sales/UpdateButton';
+// import UpdateButton from '@/components/admin/dashboard/sales/UpdateButton';
 import RemoveButton from '@/components/admin/dashboard/sales/RemoveButton';
 import { columns } from '@/components/admin/dashboard/sales/Colums';
 import TableHeading from '@/components/admin/dashboard/sales/TableHeading';
@@ -62,15 +62,14 @@ export function Table() {
                     onCheckedChange={(value) => row.toggleSelected(!!value)}
                     aria-label="Select row"
                   />
-                  <span className="font-medium">{row.original.customerName}</span>
+                  <span className="font-medium">{row.original.serie}</span>
                 </div>
                 <div className="text-gray-600 flex flex-col gap-0.5">
-                  <div>Proveedor: {row.original.customerName}</div>
-                  <div>N° Documento: {row.original.documentNumber}</div>
+                  <div>Cliente: {row.original.client.rzn_social}</div>
                 </div>
               </div>
               <div className="flex gap-2 justify-end">
-                <UpdateButton item={row.original} />
+                {/* <UpdateButton item={row.original} /> */}
                 <RemoveButton id={row.original.id} />
               </div>
             </Card>

@@ -16,8 +16,7 @@ export const verifyEmail = async (formData: Token) => {
 
 export const login = async (formData: LoginForm) => {
   try {
-    const { data } = await api.post('/auth/login', formData);
-    return LoginResponseSchema.parse(data.data);
+    return LoginResponseSchema.parse((await api.post('/auth/login', formData)).data);
   } catch (error) {
     if (isAxiosError(error) && error.response) {
       throw new Error(error.response.data.message);

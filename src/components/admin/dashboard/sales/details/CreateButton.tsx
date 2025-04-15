@@ -1,32 +1,33 @@
 import { Button } from '@/components/ui/button';
 import { Drawer, DrawerContent, DrawerDescription, DrawerHeader, DrawerTitle, DrawerTrigger } from '@/components/ui/drawer';
 import { PlusIcon } from 'lucide-react';
-import CreateForm from '@/components/admin/dashboard/sales/details/CreateForm';
+// import CreateForm from '@/components/admin/dashboard/sales/details/CreateForm';
 import { useState } from 'react';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { Skeleton } from '@/components/ui/skeleton';
-import { UseFormReturn } from 'react-hook-form';
-import { SaleForm } from '@/schemas/sales';
-import { useProducts } from '@/hooks/useProducts';
+// import { Skeleton } from '@/components/ui/skeleton';
+// import { UseFormReturn } from 'react-hook-form';
+// import { SaleForm } from '@/schemas/sales';
+// import { useProducts } from '@/hooks/useProducts';
 
-interface CreateButtonProps {
-  purchaseForm: UseFormReturn<SaleForm>;
-}
+// interface CreateButtonProps {
+//   purchaseForm: UseFormReturn<SaleForm>;
+// }
 
-export default function CreateButton({ purchaseForm }: CreateButtonProps) {
+// export default function CreateButton({ purchaseForm }: CreateButtonProps) {
+export default function CreateButton() {
   const [openDrawer, setOpenDrawer] = useState(false);
   const [openDialog, setOpenDialog] = useState(false);
 
-  const { data: products = [], isLoading } = useProducts();
+  // const { data: products = [], isLoading } = useProducts();
 
-  if (isLoading) {
-    return (
-      <>
-        <Skeleton className="w-full h-9 sm:hidden" />
-        <Skeleton className="hidden sm:inline-flex w-[110px] h-9" />
-      </>
-    );
-  }
+  // if (isLoading) {
+  //   return (
+  //     <>
+  //       <Skeleton className="w-full h-9 sm:hidden" />
+  //       <Skeleton className="hidden sm:inline-flex w-[110px] h-9" />
+  //     </>
+  //   );
+  // }
 
   return (
     <>
@@ -42,7 +43,7 @@ export default function CreateButton({ purchaseForm }: CreateButtonProps) {
             <DrawerTitle>Agregar producto</DrawerTitle>
             <DrawerDescription>Rellene el formulario para agregar el producto</DrawerDescription>
           </DrawerHeader>
-          <CreateForm purchaseForm={purchaseForm} setOpen={setOpenDrawer} products={products} />
+          {/* <CreateForm purchaseForm={purchaseForm} setOpen={setOpenDrawer} products={products} /> */}
         </DrawerContent>
       </Drawer>
 
@@ -59,7 +60,7 @@ export default function CreateButton({ purchaseForm }: CreateButtonProps) {
             <DialogTitle>Agregar producto</DialogTitle>
             <DialogDescription>Rellene el formulario para agregar el producto</DialogDescription>
           </DialogHeader>
-          <CreateForm purchaseForm={purchaseForm} setOpen={setOpenDialog} products={products} />
+          {/* <CreateForm purchaseForm={purchaseForm} setOpen={setOpenDialog} products={products} /> */}
         </DialogContent>
       </Dialog>
     </>

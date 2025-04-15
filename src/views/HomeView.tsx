@@ -9,7 +9,7 @@ export default function HomeView() {
   return (
     <>
       <h1>
-        Uste a iniciado sesion correctamente con el email: {user?.email} y tiene los roles de: {JSON.stringify(user?.role)}
+        Uste a iniciado sesion correctamente con el email: {user?.email} y el nombre: {JSON.stringify(user?.name)}
       </h1>
       <Button asChild>
         <Link to="/auth/login">Ir al login</Link>

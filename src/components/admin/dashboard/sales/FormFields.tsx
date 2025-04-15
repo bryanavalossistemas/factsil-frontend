@@ -163,7 +163,8 @@ export default function FormFields({ form, clients }: FormFieldsProps) {
             />
           </div>
         </div>
-        <CreateButton purchaseForm={form} />
+        {/* <CreateButton purchaseForm={form} /> */}
+        <CreateButton />
       </div>
       <div className="flex-1 mt-4">
         <FormField
@@ -205,7 +206,8 @@ export default function FormFields({ form, clients }: FormFieldsProps) {
                                 }
                               }}
                             />
-                            <UpdateButton purchaseForm={form} item={detail} />
+                            {/* <UpdateButton purchaseForm={form} item={detail} /> */}
+                            <UpdateButton />
                           </div>
                         </TableCell>
                         <TableCell className="truncate max-w-[460px]">{detail.descripcion}</TableCell>

@@ -11,7 +11,7 @@ export const ClientsSchema = z.array(ClientSchema);
 
 export const ClientFormSchema = z
   .object({
-    tipo_doc: z.string(),
+    tipo_doc: z.enum(['1', '6']),
     num_doc: z.string(),
     rzn_social: z.string().min(1, { message: 'La razon social es obligatoria' }),
   })

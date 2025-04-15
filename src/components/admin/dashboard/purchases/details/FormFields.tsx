@@ -104,7 +104,7 @@ export default function FormFields({ form, products }: FormFieldsProps) {
                               form.setValue('productId', product.id);
                               form.setValue('productName', product.name);
                               form.setValue('quantity', 1);
-                              form.setValue('unitPrice', product.salePrice);
+                              form.setValue('unitPrice', product.mto_precio_unitario);
                               setOpenProductsPopover(false);
                             }}
                           >

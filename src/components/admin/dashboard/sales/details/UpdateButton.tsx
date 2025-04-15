@@ -3,30 +3,31 @@ import { Drawer, DrawerContent, DrawerDescription, DrawerHeader, DrawerTitle, Dr
 import { PencilIcon, PlusIcon } from 'lucide-react';
 import { useState } from 'react';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { Skeleton } from '@/components/ui/skeleton';
-import { UseFormReturn } from 'react-hook-form';
-import { SaleDetailForm, SaleForm } from '@/schemas/sales';
-import UpdateForm from '@/components/admin/dashboard/sales/details/UpdateForm';
-import { useProducts } from '@/hooks/useProducts';
+// import { Skeleton } from '@/components/ui/skeleton';
+// import { UseFormReturn } from 'react-hook-form';
+// import { SaleDetailForm, SaleForm } from '@/schemas/sales';
+// import UpdateForm from '@/components/admin/dashboard/sales/details/UpdateForm';
+// import { useProducts } from '@/hooks/useProducts';
 
-interface UpdateButtonProps {
-  purchaseForm: UseFormReturn<SaleForm>;
-  item: SaleDetailForm;
-}
+// interface UpdateButtonProps {
+//   purchaseForm: UseFormReturn<SaleForm>;
+//   item: SaleDetailForm;
+// }
 
-export default function UpdateButton({ purchaseForm, item }: UpdateButtonProps) {
+// export default function UpdateButton({ purchaseForm, item }: UpdateButtonProps) {
+export default function UpdateButton() {
   const [openDrawer, setOpenDrawer] = useState(false);
   const [openDialog, setOpenDialog] = useState(false);
 
-  const { data: products = [], isLoading } = useProducts();
+  // const { data: products = [], isLoading } = useProducts();
 
-  if (isLoading) {
-    return (
-      <>
-        <Skeleton className="w-5 h-5" />
-      </>
-    );
-  }
+  // if (isLoading) {
+  //   return (
+  //     <>
+  //       <Skeleton className="w-5 h-5" />
+  //     </>
+  //   );
+  // }
 
   return (
     <>
@@ -42,7 +43,7 @@ export default function UpdateButton({ purchaseForm, item }: UpdateButtonProps) 
             <DrawerTitle>Editar Producto</DrawerTitle>
             <DrawerDescription>Actualice el formulario para editar el producto</DrawerDescription>
           </DrawerHeader>
-          <UpdateForm purchaseForm={purchaseForm} setOpen={setOpenDrawer} products={products} item={item} />
+          {/* <UpdateForm purchaseForm={purchaseForm} setOpen={setOpenDrawer} products={products} item={item} /> */}
         </DrawerContent>
       </Drawer>
 
@@ -56,7 +57,7 @@ export default function UpdateButton({ purchaseForm, item }: UpdateButtonProps) 
             <DialogTitle>Editar Producto</DialogTitle>
             <DialogDescription>Actualice el formulario para editar el producto</DialogDescription>
           </DialogHeader>
-          <UpdateForm purchaseForm={purchaseForm} setOpen={setOpenDialog} products={products} item={item} />
+          {/* <UpdateForm purchaseForm={purchaseForm} setOpen={setOpenDialog} products={products} item={item} /> */}
         </DialogContent>
       </Dialog>
     </>

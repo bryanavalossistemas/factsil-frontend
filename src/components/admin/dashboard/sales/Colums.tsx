@@ -3,7 +3,7 @@ import { ArrowUpDownIcon } from 'lucide-react';
 import { Sale } from '@/schemas/sales';
 import { Checkbox } from '@/components/ui/checkbox';
 import RemoveButton from '@/components/admin/dashboard/sales/RemoveButton';
-import UpdateButton from '@/components/admin/dashboard/sales/UpdateButton';
+// import UpdateButton from '@/components/admin/dashboard/sales/UpdateButton';
 import { formatCurrency, formatDate } from '@/lib/utils';
 import { Badge } from '@/components/ui/badge';
 
@@ -100,7 +100,7 @@ export const columns = [
     id: 'action',
     cell: ({ row }) => (
       <div className="flex gap-2 justify-end">
-        <UpdateButton item={row.original} />
+        {/* <UpdateButton item={row.original} /> */}
         <RemoveButton id={row.original.id} />
       </div>
     ),
